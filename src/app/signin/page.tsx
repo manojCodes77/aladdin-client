@@ -45,7 +45,7 @@ export default function SigninPage() {
     setLoading(true)
 
     try {
-      const response = await fetch('http://localhost:3001/api/users/login', {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/users/login`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

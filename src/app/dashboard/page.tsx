@@ -3,11 +3,11 @@
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
-import { getUser, logout } from '@/lib/auth'
+import { getUser, logout, type User } from '@/lib/auth'
 
 export default function DashboardPage() {
   const router = useRouter()
-  const [user, setUser] = useState<any>(null)
+  const [user, setUser] = useState<User | null>(null)
 
   useEffect(() => {
     const currentUser = getUser()
@@ -24,90 +24,89 @@ export default function DashboardPage() {
 
   if (!user) {
     return (
-      <div className="center" style={{ minHeight: '100vh' }}>
-        <div className="spinner"></div>
+      <div className="flex min-h-screen items-center justify-center bg-[#f8f7f4]">
+        <div className="h-8 w-8 animate-spin rounded-full border-2 border-slate-300 border-t-[#02c4cb]" />
       </div>
     )
   }
 
   return (
-    <div style={{ minHeight: '100vh', background: 'var(--color-bg-alt)' }}>
+    <div className="min-h-screen bg-[#f8f7f4]">
       {/* Navigation */}
-      <nav className="navbar">
-        <div className="container cluster" style={{ justifyContent: 'space-between' }}>
-          <Link href="/" className="h5" style={{ color: 'white' }}>
+      <nav className="bg-[#054a4e] text-white">
+        <div className="mx-auto flex w-full max-w-5xl items-center justify-between px-4 py-4">
+          <Link href="/" className="text-lg font-semibold text-white">
             Airavat
           </Link>
-          <div className="cluster">
-            <span style={{ color: 'rgba(255,255,255,0.8)' }}>{user.email}</span>
-            <button onClick={logout} className="btn btn-ghost" style={{ color: 'white' }}>
+          <div className="flex items-center gap-4 text-sm">
+            <span className="text-white/80">{user.email}</span>
+            <button
+              onClick={logout}
+              className="rounded-lg border border-white/40 px-4 py-2 font-medium text-white transition hover:border-white hover:bg-white/10"
+            >
               Logout
             </button>
           </div>
         </div>
       </nav>
 
-      <div className="container" style={{ paddingTop: 'var(--space-8)', paddingBottom: 'var(--space-8)' }}>
-        <div className="stack">
-          <div>
-            <h1 className="h2">Supplier Dashboard</h1>
-            <p className="text-muted mt-2">Welcome back, {user.email}</p>
-          </div>
-
-          {/* Stats */}
-          <div className="grid grid-4 mt-6">
-            <div className="stat-card">
-              <div className="stat-value">142</div>
-              <div className="stat-label">Products Listed</div>
-              <div className="stat-trend up">+12% this month</div>
-            </div>
-            <div className="stat-card">
-              <div className="stat-value">28</div>
-              <div className="stat-label">Pending Inquiries</div>
-              <div className="stat-trend up">+5 new</div>
-            </div>
-            <div className="stat-card">
-              <div className="stat-value">$24.5K</div>
-              <div className="stat-label">Total Sales</div>
-              <div className="stat-trend up">+8.2%</div>
-            </div>
-            <div className="stat-card">
-              <div className="stat-value">4.8</div>
-              <div className="stat-label">Average Rating</div>
-              <div className="stat-trend up">+0.3</div>
-            </div>
-          </div>
-
-          {/* Quick Actions */}
-          <div className="card mt-6">
-            <div className="card-header">
-              <h3 className="h4">Quick Actions</h3>
-            </div>
-            <div className="card-body">
-              <div className="grid grid-4">
-                <button className="btn btn-primary">Add Product</button>
-                <button className="btn btn-outline">View Inquiries</button>
-                <button className="btn btn-outline">Manage Orders</button>
-                <button className="btn btn-outline">View Analytics</button>
-              </div>
-            </div>
-          </div>
-
-          {/* Recent Activity */}
-          <div className="card mt-6">
-            <div className="card-header">
-              <h3 className="h4">Recent Activity</h3>
-            </div>
-            <div className="card-body">
-              <div className="empty-state">
-                <div className="empty-state-icon">📦</div>
-                <h4 className="h5">No recent activity</h4>
-                <p className="text-muted">Your recent orders and inquiries will appear here</p>
-              </div>
-            </div>
-          </div>
+      <main className="mx-auto w-full max-w-5xl space-y-8 px-4 py-12">
+        <div>
+          <h1 className="text-3xl font-bold text-[#054a4e]">Supplier Dashboard</h1>
+          <p className="mt-2 text-base text-slate-600">Welcome back, {user.email}</p>
         </div>
-      </div>
+
+        {/* Stats */}
+        <section className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+          {[
+            { value: '142', label: 'Products Listed', trend: '+12% this month' },
+            { value: '28', label: 'Pending Inquiries', trend: '+5 new' },
+            { value: '$24.5K', label: 'Total Sales', trend: '+8.2%' },
+            { value: '4.8', label: 'Average Rating', trend: '+0.3' },
+          ].map((stat) => (
+            <div key={stat.label} className="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
+              <div className="text-3xl font-bold text-[#054a4e]">{stat.value}</div>
+              <div className="mt-2 text-sm text-slate-500">{stat.label}</div>
+              <div className="mt-4 text-sm font-medium text-emerald-600">{stat.trend}</div>
+            </div>
+          ))}
+        </section>
+
+        {/* Quick Actions */}
+        <section className="rounded-2xl border border-slate-200 bg-white shadow-sm">
+          <div className="flex items-center justify-between border-b border-slate-100 px-6 py-4">
+            <h3 className="text-lg font-semibold text-[#1a1a1a]">Quick Actions</h3>
+          </div>
+          <div className="grid grid-cols-1 gap-4 px-6 py-6 sm:grid-cols-2 lg:grid-cols-4">
+            <button className="rounded-lg bg-[#02c4cb] px-4 py-2 text-sm font-semibold text-white transition hover:bg-[#00aeb4]">
+              Add Product
+            </button>
+            <button className="rounded-lg border border-[#054a4e] px-4 py-2 text-sm font-semibold text-[#054a4e] transition hover:bg-[#054a4e] hover:text-white">
+              View Inquiries
+            </button>
+            <button className="rounded-lg border border-[#054a4e] px-4 py-2 text-sm font-semibold text-[#054a4e] transition hover:bg-[#054a4e] hover:text-white">
+              Manage Orders
+            </button>
+            <button className="rounded-lg border border-[#054a4e] px-4 py-2 text-sm font-semibold text-[#054a4e] transition hover:bg-[#054a4e] hover:text-white">
+              View Analytics
+            </button>
+          </div>
+        </section>
+
+        {/* Recent Activity */}
+        <section className="rounded-2xl border border-slate-200 bg-white shadow-sm">
+          <div className="flex items-center justify-between border-b border-slate-100 px-6 py-4">
+            <h3 className="text-lg font-semibold text-[#1a1a1a]">Recent Activity</h3>
+          </div>
+          <div className="px-6 py-10">
+            <div className="flex flex-col items-center justify-center gap-4 rounded-xl border border-dashed border-slate-200 bg-slate-50/60 p-12 text-center">
+              <div className="text-4xl">📦</div>
+              <h4 className="text-xl font-semibold text-[#1a1a1a]">No recent activity</h4>
+              <p className="text-sm text-slate-500">Your recent orders and inquiries will appear here.</p>
+            </div>
+          </div>
+        </section>
+      </main>
     </div>
   )
 }

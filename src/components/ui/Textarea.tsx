@@ -1,4 +1,5 @@
 import React from 'react';
+import { cn } from '@/lib/utils';
 
 export interface TextareaProps extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {
   label?: string;
@@ -22,21 +23,28 @@ export const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
     },
     ref
   ) => {
-    const textareaId = id || `textarea-${Math.random().toString(36).substr(2, 9)}`;
+    const generatedId = React.useId();
+    const textareaId = id || generatedId;
 
     return (
-      <div className={`form-group ${fullWidth ? 'w-full' : ''}`}>
+      <div className={cn('space-y-1.5', fullWidth && 'w-full')}>
         {label && (
-          <label htmlFor={textareaId} className="label">
+          <label htmlFor={textareaId} className="block text-sm font-medium text-slate-700">
             {label}
-            {props.required && <span style={{ color: 'var(--color-danger)' }}> *</span>}
+            {props.required && <span className="ml-1 text-red-600">*</span>}
           </label>
         )}
 
         <textarea
           ref={ref}
           id={textareaId}
-          className={`input ${error ? 'input-error' : ''} ${className}`}
+          className={cn(
+            'block w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-900 shadow-sm transition',
+            'focus:border-[#02c4cb] focus:outline-none focus:ring-2 focus:ring-[#02c4cb]/20',
+            'disabled:cursor-not-allowed disabled:bg-slate-100',
+            error && 'border-red-500 focus:border-red-500 focus:ring-red-200',
+            className
+          )}
           style={{ resize }}
           aria-invalid={error ? 'true' : 'false'}
           aria-describedby={error ? `${textareaId}-error` : hint ? `${textareaId}-hint` : undefined}
@@ -44,15 +52,15 @@ export const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
         />
 
         {error && (
-          <span id={`${textareaId}-error`} className="error-message">
+          <p id={`${textareaId}-error`} className="text-sm text-red-600">
             {error}
-          </span>
+          </p>
         )}
 
         {hint && !error && (
-          <span id={`${textareaId}-hint`} className="hint-text">
+          <p id={`${textareaId}-hint`} className="text-sm text-slate-500">
             {hint}
-          </span>
+          </p>
         )}
       </div>
     );

@@ -80,7 +80,7 @@ export default function SignupPage() {
       } else {
         setErrors({ submit: data.error || 'Failed to create account' })
       }
-    } catch (error) {
+    } catch {
       setErrors({ submit: 'Network error. Please try again.' })
     } finally {
       setLoading(false)
@@ -97,55 +97,53 @@ export default function SignupPage() {
   }
 
   return (
-    <div style={{ minHeight: '100vh', display: 'flex' }}>
+    <div className="flex min-h-screen flex-col bg-white lg:flex-row">
       {/* Left Side - Form */}
-      <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 'var(--space-8)' }}>
-        <div style={{ width: '100%', maxWidth: '450px' }}>
+      <div className="flex flex-1 items-center justify-center px-4 py-12 sm:px-6 lg:px-12">
+        <div className="w-full max-w-lg space-y-10">
           {/* Logo */}
-          <div style={{ marginBottom: 'var(--space-8)' }}>
-            <Link href="/">
-              <Image src="/icon.svg" alt="Airavat" width={150} height={50} style={{ height: '50px', width: 'auto' }} />
-            </Link>
-          </div>
+          <Link href="/" className="inline-flex items-center">
+            <Image src="/icon.svg" alt="Airavat" width={150} height={50} className="h-12 w-auto" />
+          </Link>
 
           {/* Header */}
-          <div style={{ marginBottom: 'var(--space-6)' }}>
-            <h1 className="h2">Create your account</h1>
-            <p className="text-muted mt-2">Join thousands of businesses on Airavat</p>
+          <div className="space-y-2">
+            <h1 className="text-3xl font-bold text-[#054a4e]">Create your account</h1>
+            <p className="text-base text-slate-600">Join thousands of businesses on Airavat</p>
           </div>
 
           {/* Form */}
-          <form onSubmit={handleSubmit} className="stack" style={{ gap: 'var(--space-4)' }}>
+          <form onSubmit={handleSubmit} className="space-y-6">
             {/* Email */}
-            <div>
-              <label htmlFor="email" className="label">Email Address</label>
+            <div className="space-y-2">
+              <label htmlFor="email" className="text-sm font-medium text-slate-700">
+                Email Address
+              </label>
               <input
                 type="email"
                 id="email"
                 name="email"
-                className="input"
                 placeholder="you@company.com"
                 value={formData.email}
                 onChange={handleChange}
                 disabled={loading}
+                className="block w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-900 shadow-sm transition focus:border-[#02c4cb] focus:outline-none focus:ring-2 focus:ring-[#02c4cb]/20"
               />
-              {errors.email && (
-                <p className="text-sm text-danger" style={{ marginTop: 'var(--space-2)' }}>
-                  {errors.email}
-                </p>
-              )}
+              {errors.email && <p className="text-sm text-red-600">{errors.email}</p>}
             </div>
 
             {/* Role Selection */}
-            <div>
-              <label htmlFor="role" className="label">I am a</label>
+            <div className="space-y-2">
+              <label htmlFor="role" className="text-sm font-medium text-slate-700">
+                I am a
+              </label>
               <select
                 id="role"
                 name="role"
-                className="select"
                 value={formData.role}
                 onChange={handleChange}
                 disabled={loading}
+                className="block w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-900 shadow-sm transition focus:border-[#02c4cb] focus:outline-none focus:ring-2 focus:ring-[#02c4cb]/20"
               >
                 <option value="user">Buyer</option>
                 <option value="admin">Supplier/Seller</option>
@@ -153,153 +151,117 @@ export default function SignupPage() {
             </div>
 
             {/* Password */}
-            <div>
-              <label htmlFor="password" className="label">Password</label>
-              <div style={{ position: 'relative' }}>
+            <div className="space-y-2">
+              <label htmlFor="password" className="text-sm font-medium text-slate-700">
+                Password
+              </label>
+              <div className="relative">
                 <input
                   type={showPassword ? 'text' : 'password'}
                   id="password"
                   name="password"
-                  className="input"
                   placeholder="Create a strong password"
-                  autoComplete='off'
+                  autoComplete="off"
                   value={formData.password}
                   onChange={handleChange}
                   disabled={loading}
+                  className="block w-full rounded-lg border border-slate-200 bg-white px-3 py-2 pr-10 text-sm text-slate-900 shadow-sm transition focus:border-[#02c4cb] focus:outline-none focus:ring-2 focus:ring-[#02c4cb]/20"
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  style={{
-                    position: 'absolute',
-                    right: 'var(--space-3)',
-                    top: '50%',
-                    transform: 'translateY(-50%)',
-                    background: 'transparent',
-                    border: 'none',
-                    cursor: 'pointer',
-                    color: 'var(--color-text-tertiary)',
-                  }}
+                  className="absolute inset-y-0 right-3 flex items-center text-lg text-slate-400 transition hover:text-slate-600"
                 >
                   {showPassword ? '👁️' : '👁️‍🗨️'}
                 </button>
               </div>
-              {errors.password && (
-                <p className="text-sm text-danger" style={{ marginTop: 'var(--space-2)' }}>
-                  {errors.password}
-                </p>
-              )}
-              <p className="text-xs text-muted" style={{ marginTop: 'var(--space-2)' }}>
-                Must be at least 8 characters
-              </p>
+              {errors.password && <p className="text-sm text-red-600">{errors.password}</p>}
+              <p className="text-xs text-slate-500">Must be at least 8 characters</p>
             </div>
 
             {/* Confirm Password */}
-            <div>
-              <label htmlFor="confirmPassword" className="label">Confirm Password</label>
+            <div className="space-y-2">
+              <label htmlFor="confirmPassword" className="text-sm font-medium text-slate-700">
+                Confirm Password
+              </label>
               <input
                 type={showPassword ? 'text' : 'password'}
                 id="confirmPassword"
                 name="confirmPassword"
-                className="input"
                 placeholder="Re-enter your password"
                 value={formData.confirmPassword}
                 onChange={handleChange}
                 disabled={loading}
+                className="block w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-900 shadow-sm transition focus:border-[#02c4cb] focus:outline-none focus:ring-2 focus:ring-[#02c4cb]/20"
               />
-              {errors.confirmPassword && (
-                <p className="text-sm text-danger" style={{ marginTop: 'var(--space-2)' }}>
-                  {errors.confirmPassword}
-                </p>
-              )}
+              {errors.confirmPassword && <p className="text-sm text-red-600">{errors.confirmPassword}</p>}
             </div>
 
             {/* Submit Error */}
             {errors.submit && (
-              <div className="alert alert-danger">
+              <div className="rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
                 {errors.submit}
               </div>
             )}
 
             {/* Terms */}
-            <div style={{ fontSize: 'var(--text-xs)', color: 'var(--color-text-tertiary)' }}>
+            <div className="text-xs text-slate-500">
               By creating an account, you agree to our{' '}
-              <Link href="/terms" className="text-primary">Terms of Service</Link>
-              {' '}and{' '}
-              <Link href="/privacy" className="text-primary">Privacy Policy</Link>
+              <Link href="/terms" className="font-semibold text-[#054a4e] hover:underline">
+                Terms of Service
+              </Link>{' '}
+              and{' '}
+              <Link href="/privacy" className="font-semibold text-[#054a4e] hover:underline">
+                Privacy Policy
+              </Link>
             </div>
 
             {/* Submit Button */}
             <button
               type="submit"
-              className="btn btn-primary"
-              style={{ width: '100%' }}
+              className="inline-flex w-full items-center justify-center rounded-lg bg-[#02c4cb] px-5 py-3 text-base font-semibold text-white transition hover:bg-[#00aeb4] disabled:cursor-not-allowed disabled:opacity-70"
               disabled={loading}
             >
               {loading ? (
-                <span className="cluster" style={{ gap: 'var(--space-2)' }}>
-                  <span className="spinner" style={{ width: '16px', height: '16px', borderWidth: '2px' }}></span>
+                <>
+                  <span className="mr-3 inline-flex h-4 w-4 animate-spin rounded-full border-2 border-white/60 border-t-white" />
                   Creating account...
-                </span>
+                </>
               ) : (
                 'Create Account'
               )}
             </button>
 
             {/* Sign In Link */}
-            <div className="text-center">
-              <p className="text-sm text-muted">
-                Already have an account?{' '}
-                <Link href="/signin" className="text-primary" style={{ fontWeight: 600 }}>
-                  Sign in
-                </Link>
-              </p>
-            </div>
+            <p className="text-center text-sm text-slate-600">
+              Already have an account?{' '}
+              <Link href="/signin" className="font-semibold text-[#054a4e] hover:underline">
+                Sign in
+              </Link>
+            </p>
           </form>
         </div>
       </div>
 
       {/* Right Side - Image/Branding */}
-      <div 
-        style={{ 
-          flex: 1, 
-          background: 'linear-gradient(135deg, #054a4e 0%, #02c4cb 100%)',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          padding: 'var(--space-12)',
-          color: 'white',
-        }}
-        className="hide-mobile"
-      >
-        <div style={{ maxWidth: '500px', textAlign: 'center' }}>
-          <h2 className="h1" style={{ color: 'white', marginBottom: 'var(--space-6)' }}>
-            Connect with Global Suppliers
-          </h2>
-          <p className="text-lg" style={{ color: 'rgba(255, 255, 255, 0.9)', marginBottom: 'var(--space-8)' }}>
+      <div className="relative hidden flex-1 items-center justify-center bg-[linear-gradient(135deg,#054a4e_0%,#02c4cb_100%)] p-12 text-white lg:flex">
+        <div className="max-w-md text-center">
+          <h2 className="text-4xl font-bold leading-tight">Connect with Global Suppliers</h2>
+          <p className="mt-6 text-base text-white/80">
             Source quality products, negotiate better prices, and grow your business with Airavat B2B marketplace.
           </p>
-          <div className="stack" style={{ gap: 'var(--space-4)', textAlign: 'left' }}>
+          <div className="mt-10 space-y-4 text-left">
             {[
-              { icon: '✓', text: 'Access to 50,000+ verified suppliers' },
-              { icon: '✓', text: 'Secure payment and trade protection' },
-              { icon: '✓', text: 'Real-time order tracking' },
-              { icon: '✓', text: '24/7 customer support' },
-            ].map((feature, idx) => (
-              <div key={idx} className="cluster" style={{ gap: 'var(--space-3)' }}>
-                <div style={{ 
-                  width: '24px', 
-                  height: '24px', 
-                  background: 'rgba(255, 255, 255, 0.2)', 
-                  borderRadius: '50%',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  flexShrink: 0,
-                }}>
-                  {feature.icon}
-                </div>
-                <p style={{ color: 'rgba(255, 255, 255, 0.9)' }}>{feature.text}</p>
+              'Access to 50,000+ verified suppliers',
+              'Secure payment and trade protection',
+              'Real-time order tracking',
+              '24/7 customer support',
+            ].map((feature) => (
+              <div key={feature} className="flex items-start gap-3">
+                <span className="mt-0.5 inline-flex h-6 w-6 items-center justify-center rounded-full bg-white/20 text-sm">
+                  ✓
+                </span>
+                <p className="text-sm text-white/80">{feature}</p>
               </div>
             ))}
           </div>

@@ -74,7 +74,7 @@ export default function SigninPage() {
       } else {
         setErrors({ submit: data.error || 'Invalid credentials' })
       }
-    } catch (error) {
+    } catch {
       setErrors({ submit: 'Network error. Please check your connection and try again.' })
     } finally {
       setLoading(false)
@@ -101,7 +101,7 @@ export default function SigninPage() {
           <div className="space-y-2">
             <h1 className="text-3xl font-bold text-gray-900">Welcome Back</h1>
             <p className="text-gray-600">
-              Don't have an account?{' '}
+              Don&apos;t have an account?{' '}
               <Link href="/signup" className="text-[#054a4e] font-medium hover:underline">
                 Sign up for free
               </Link>
@@ -241,7 +241,7 @@ export default function SigninPage() {
           </svg>
           
           <blockquote className="text-2xl font-semibold leading-relaxed">
-            "AladdinNow transformed how we source products. We've reduced costs by 30% and found reliable suppliers worldwide."
+            &ldquo;AladdinNow transformed how we source products. We&apos;ve reduced costs by 30% and found reliable suppliers worldwide.&rdquo;
           </blockquote>
           
           <div className="flex items-center gap-4">

@@ -1,212 +1,251 @@
 import Image from 'next/image'
 import Link from 'next/link'
 
+const categories = [
+  'Electronics',
+  'Machinery',
+  'Textiles',
+  'Agriculture',
+  'Chemicals',
+  'Automotive',
+  'Construction',
+  'Packaging',
+]
+
+const navTabs = ['All Categories', 'Electronics', 'Machinery', 'Textiles', 'Request Quote', 'Trade Services']
+
 export default function Home() {
   return (
-    <div>
+    <div className="min-h-screen bg-white text-[#1a1a1a]">
       {/* Top Navigation */}
-      <nav className="navbar">
-        <div className="container cluster" style={{ justifyContent: 'space-between' }}>
-          <div className="cluster">
-            <Image src="/icon.svg" alt="Airavat Logo" width={120} height={40} style={{ height: '40px', width: 'auto' }} />
-            <div className="input-group" style={{ width: '400px', maxWidth: '100%' }}>
-              <input 
-                type="search" 
-                className="input" 
-                placeholder="Search products, suppliers..." 
-                style={{ height: '40px' }}
+      <nav className="bg-[#054a4e] text-white">
+        <div className="mx-auto flex w-full max-w-6xl items-center justify-between gap-4 px-4 py-4">
+          <div className="flex flex-1 items-center gap-4">
+            <Image src="/icon.svg" alt="Airavat Logo" width={120} height={40} className="h-10 w-auto" priority />
+            <div className="hidden w-full max-w-md flex-1 sm:block">
+              <label htmlFor="global-search" className="sr-only">
+                Search products
+              </label>
+              <input
+                id="global-search"
+                type="search"
+                placeholder="Search products, suppliers..."
+                className="h-10 w-full rounded-lg border border-white/20 bg-white/10 px-4 text-sm text-white placeholder:text-white/70 focus:border-white focus:bg-white focus:text-[#054a4e] focus:outline-none focus:ring-2 focus:ring-[#02c4cb]/50"
               />
             </div>
           </div>
-          <div className="cluster gap-4">
-            <Link href="/signin">
-              <button className="btn btn-ghost">Sign In</button>
+          <div className="flex items-center gap-3">
+            <Link
+              href="/signin"
+              className="inline-flex items-center rounded-lg px-4 py-2 text-sm font-medium text-white/90 transition hover:bg-white/10 hover:text-white"
+            >
+              Sign In
             </Link>
-            <Link href="/signup">
-              <button className="btn btn-primary">Get Started</button>
+            <Link
+              href="/signup"
+              className="inline-flex items-center rounded-lg bg-[#02c4cb] px-4 py-2 text-sm font-semibold text-white transition hover:bg-[#00aeb4]"
+            >
+              Get Started
             </Link>
           </div>
         </div>
       </nav>
 
       {/* Category Navigation */}
-      <div className="category-rail">
-        <div className="container">
-          <div className="tabbar">
-            <button className="tab active">All Categories</button>
-            <button className="tab">Electronics</button>
-            <button className="tab">Machinery</button>
-            <button className="tab">Textiles</button>
-            <button className="tab">Request Quote</button>
-            <button className="tab">Trade Services</button>
+      <div className="border-b border-slate-200 bg-white">
+        <div className="mx-auto max-w-6xl px-4">
+          <div className="flex items-center gap-3 overflow-x-auto py-3 text-sm font-medium text-[#054a4e]">
+            {navTabs.map((tab, index) => (
+              <button
+                key={tab}
+                type="button"
+                className={`whitespace-nowrap rounded-full border px-4 py-2 transition ${index === 0
+                    ? 'border-[#02c4cb] bg-[#02c4cb]/10 text-[#054a4e]'
+                    : 'border-transparent text-[#054a4e]/80 hover:border-[#02c4cb]/40 hover:bg-[#02c4cb]/10 hover:text-[#054a4e]'
+                  }`}
+              >
+                {tab}
+              </button>
+            ))}
           </div>
         </div>
       </div>
 
       {/* Hero Section */}
-      <section className="section" style={{ background: 'linear-gradient(135deg, #054a4e 0%, #02c4cb 100%)', color: 'white', paddingBlock: 'var(--space-16)' }}>
-        <div className="container">
-          <div className="grid grid-2" style={{ alignItems: 'center', gap: 'var(--space-12)' }}>
-            <div className="stack">
-              <h1 className="h1" style={{ color: 'white' }}>Connect with Global Suppliers</h1>
-              <p className="text-lg" style={{ color: 'rgba(255, 255, 255, 0.9)', maxWidth: '500px' }}>
-                Source quality products, negotiate better prices, and grow your business with Airavat B2B marketplace.
-              </p>
-              <div className="cluster mt-6">
-                <button className="btn btn-primary btn-lg">Start Sourcing</button>
-                <button className="btn btn-outline btn-lg">
-                  Learn More
-                </button>
-              </div>
+      <section className="bg-[linear-gradient(135deg,#054a4e_0%,#02c4cb_100%)] py-20 text-white">
+        <div className="mx-auto grid max-w-6xl grid-cols-1 items-center gap-12 px-4 md:grid-cols-2">
+          <div className="space-y-6">
+            <h1 className="text-4xl font-bold leading-tight sm:text-5xl">
+              Connect with Global Suppliers
+            </h1>
+            <p className="max-w-xl text-lg text-white/80">
+              Source quality products, negotiate better prices, and grow your business with Airavat B2B marketplace.
+            </p>
+            <div className="flex flex-wrap items-center gap-4">
+              <button className="inline-flex items-center rounded-lg bg-[#02c4cb] px-6 py-3 text-base font-semibold text-white transition hover:bg-[#00aeb4]">
+                Start Sourcing
+              </button>
+              <button className="inline-flex items-center rounded-lg border border-white/60 px-6 py-3 text-base font-semibold text-white transition hover:border-white hover:bg-white/10">
+                Learn More
+              </button>
             </div>
-            <div className="center" style={{ minHeight: '300px', borderRadius: 'var(--radius-lg)' }}>
-               <img src={'./hero-image-placeholder.svg'} alt="Hero Image" height={'300px'} />
-            </div>
+          </div>
+          <div className="flex items-center justify-center">
+            <Image
+              src="/hero-image-placeholder.svg"
+              alt="Global sourcing illustration"
+              width={420}
+              height={320}
+              className="h-72 w-auto drop-shadow-xl sm:h-80"
+              priority
+            />
           </div>
         </div>
       </section>
 
       {/* Featured Categories */}
-      <section className="section-alt">
-        <div className="container">
-          <div className="stack">
-            <div className="text-center mb-6">
-              <h2 className="h2">Browse by Category</h2>
-              <p className="text-muted mt-2">Discover products from verified suppliers</p>
-            </div>
-            <div className="grid grid-4">
-              {['Electronics', 'Machinery', 'Textiles', 'Agriculture', 'Chemicals', 'Automotive', 'Construction', 'Packaging'].map((category) => (
-                <div key={category} className="card" style={{ cursor: 'pointer', padding: 'var(--space-6)', textAlign: 'center' }}>
-                  <div className="center" style={{ width: '64px', height: '64px', background: 'var(--color-primary-50)', borderRadius: 'var(--radius-md)', margin: '0 auto var(--space-3)' }}>
-                    <span style={{ fontSize: '32px' }}>📦</span>
-                  </div>
-                  <h3 className="h5">{category}</h3>
-                  <p className="text-sm text-muted mt-2">1000+ products</p>
+      <section className="bg-[#f8f7f4] py-16">
+        <div className="mx-auto max-w-6xl space-y-10 px-4">
+          <div className="text-center">
+            <h2 className="text-3xl font-bold text-[#054a4e]">Browse by Category</h2>
+            <p className="mt-2 text-base text-slate-600">Discover products from verified suppliers</p>
+          </div>
+          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+            {categories.map((category) => (
+              <div
+                key={category}
+                className="rounded-xl border border-slate-200 bg-white p-6 text-center shadow-sm transition hover:-translate-y-1 hover:shadow-lg"
+              >
+                <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-lg bg-[#054a4e]/10 text-3xl">
+                  📦
                 </div>
-              ))}
-            </div>
+                <h3 className="text-lg font-semibold text-[#1a1a1a]">{category}</h3>
+                <p className="mt-2 text-sm text-slate-500">1000+ products</p>
+              </div>
+            ))}
           </div>
         </div>
       </section>
 
       {/* Featured Products */}
-      <section className="section">
-        <div className="container">
-          <div className="stack">
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-              <div>
-                <h2 className="h2">Trending Products</h2>
-                <p className="text-muted mt-2">Popular items from verified suppliers</p>
-              </div>
-              <button className="btn btn-ghost">View All →</button>
+      <section className="py-16">
+        <div className="mx-auto max-w-6xl space-y-10 px-4">
+          <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+            <div>
+              <h2 className="text-3xl font-bold text-[#054a4e]">Trending Products</h2>
+              <p className="mt-2 text-base text-slate-600">Popular items from verified suppliers</p>
             </div>
-            <div className="grid grid-4 mt-6">
-              {[1, 2, 3, 4, 5, 6, 7, 8].map((item) => (
-                <div key={item} className="card product-tile">
-                  <div style={{ aspectRatio: '1', background: 'var(--color-bg-alt)', borderRadius: 'var(--radius-md) var(--radius-md) 0 0' }}></div>
-                  <div className="card-body">
-                    <h3 className="title">Industrial LED Light Fixture</h3>
-                    <p className="subtitle mt-2">LED Lighting Solutions Co.</p>
-                    <div className="cluster mt-3" style={{ justifyContent: 'space-between', alignItems: 'center' }}>
-                      <div>
-                        <div className="price text-2xl">$45.00</div>
-                        <div className="moq text-muted">MOQ: 100 pcs</div>
-                      </div>
-                      <button className="btn btn-sm btn-primary">Inquire</button>
+            <button className="self-start rounded-lg border border-[#054a4e] px-4 py-2 text-sm font-semibold text-[#054a4e] transition hover:bg-[#054a4e] hover:text-white">
+              View All →
+            </button>
+          </div>
+          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+            {Array.from({ length: 8 }).map((_, index) => (
+              <div
+                key={index}
+                className="flex h-full flex-col overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm transition hover:-translate-y-1 hover:shadow-lg"
+              >
+                <div className="aspect-square w-full bg-[#f0efe9]" />
+                <div className="flex flex-1 flex-col gap-3 px-5 py-6">
+                  <div>
+                    <h3 className="text-lg font-semibold text-[#1a1a1a]">Industrial LED Light Fixture</h3>
+                    <p className="mt-2 text-sm text-slate-500">LED Lighting Solutions Co.</p>
+                  </div>
+                  <div className="mt-auto flex items-center justify-between">
+                    <div>
+                      <div className="text-2xl font-bold text-[#054a4e]">$45.00</div>
+                      <div className="text-sm text-slate-500">MOQ: 100 pcs</div>
                     </div>
+                    <button className="rounded-lg bg-[#02c4cb] px-4 py-2 text-sm font-semibold text-white transition hover:bg-[#00aeb4]">
+                      Inquire
+                    </button>
                   </div>
                 </div>
-              ))}
-            </div>
+              </div>
+            ))}
           </div>
         </div>
       </section>
 
       {/* Stats Section */}
-      <section className="section-alt">
-        <div className="container">
-          <div className="grid grid-4">
-            <div className="stat-card text-center">
-              <div className="stat-value">50K+</div>
-              <div className="stat-label">Verified Suppliers</div>
+      <section className="bg-[#f8f7f4] py-16">
+        <div className="mx-auto max-w-6xl grid grid-cols-1 gap-6 px-4 sm:grid-cols-2 lg:grid-cols-4">
+          {[
+            { value: '50K+', label: 'Verified Suppliers' },
+            { value: '2M+', label: 'Products Listed' },
+            { value: '150+', label: 'Countries Served' },
+            { value: '99.8%', label: 'Customer Satisfaction' },
+          ].map((stat) => (
+            <div key={stat.label} className="rounded-xl border border-slate-200 bg-white p-6 text-center shadow-sm">
+              <div className="text-3xl font-bold text-[#054a4e]">{stat.value}</div>
+              <div className="mt-2 text-sm text-slate-600">{stat.label}</div>
             </div>
-            <div className="stat-card text-center">
-              <div className="stat-value">2M+</div>
-              <div className="stat-label">Products Listed</div>
-            </div>
-            <div className="stat-card text-center">
-              <div className="stat-value">150+</div>
-              <div className="stat-label">Countries Served</div>
-            </div>
-            <div className="stat-card text-center">
-              <div className="stat-value">99.8%</div>
-              <div className="stat-label">Customer Satisfaction</div>
-            </div>
-          </div>
+          ))}
         </div>
       </section>
 
       {/* CTA Section */}
-      <section className="section" style={{ background: 'var(--color-primary)', color: 'white' }}>
-        <div className="container">
-          <div className="text-center stack">
-            <h2 className="h2" style={{ color: 'white' }}>Ready to Start Sourcing?</h2>
-            <p className="text-lg" style={{ color: 'rgba(255, 255, 255, 0.9)', maxWidth: '600px', margin: '0 auto' }}>
-              Join thousands of businesses already sourcing with Airavat
-            </p>
-            <div className="cluster mt-6" style={{ justifyContent: 'center' }}>
-              <button className="btn btn-primary btn-lg">Create Free Account</button>
-              <button className="btn btn-outline btn-lg" >
-                Contact Sales
-              </button>
-            </div>
+      <section className="bg-[#054a4e] py-16 text-white">
+        <div className="mx-auto max-w-4xl px-4 text-center">
+          <h2 className="text-3xl font-bold sm:text-4xl">Ready to Start Sourcing?</h2>
+          <p className="mx-auto mt-4 max-w-2xl text-lg text-white/80">
+            Join thousands of businesses already sourcing with Airavat.
+          </p>
+          <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
+            <button className="rounded-lg bg-[#02c4cb] px-6 py-3 text-base font-semibold text-white transition hover:bg-[#00aeb4]">
+              Create Free Account
+            </button>
+            <button className="rounded-lg border border-white/70 px-6 py-3 text-base font-semibold text-white transition hover:border-white hover:bg-white/10">
+              Contact Sales
+            </button>
           </div>
         </div>
       </section>
 
       {/* Footer */}
-      <footer style={{ background: 'var(--color-bg-secondary)', borderTop: '1px solid var(--color-border)', padding: 'var(--space-12) 0 var(--space-6)' }}>
-        <div className="container">
-          <div className="grid grid-4 mb-8">
-            <div>
-              <h4 className="h5 mb-4">About Airavat</h4>
-              <p className="text-sm text-muted">Your trusted B2B marketplace connecting buyers and suppliers worldwide.</p>
+      <footer className="border-t border-slate-200 bg-[#f0efe9] py-16">
+        <div className="mx-auto max-w-6xl px-4">
+          <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-4">
+            <div className="space-y-4">
+              <h4 className="text-lg font-semibold text-[#054a4e]">About Airavat</h4>
+              <p className="text-sm text-slate-600">
+                Your trusted B2B marketplace connecting buyers and suppliers worldwide.
+              </p>
             </div>
-            <div>
-              <h4 className="h5 mb-4">Quick Links</h4>
-              <div className="stack" style={{ gap: 'var(--space-2)' }}>
-                <a href="#" className="text-sm">About Us</a>
-                <a href="#" className="text-sm">How It Works</a>
-                <a href="#" className="text-sm">Supplier Directory</a>
-                <a href="#" className="text-sm">Trade Services</a>
+            <div className="space-y-4">
+              <h4 className="text-lg font-semibold text-[#054a4e]">Quick Links</h4>
+              <div className="flex flex-col gap-2 text-sm text-slate-600">
+                <a href="#" className="transition hover:text-[#054a4e]">About Us</a>
+                <a href="#" className="transition hover:text-[#054a4e]">How It Works</a>
+                <a href="#" className="transition hover:text-[#054a4e]">Supplier Directory</a>
+                <a href="#" className="transition hover:text-[#054a4e]">Trade Services</a>
               </div>
             </div>
-            <div>
-              <h4 className="h5 mb-4">For Buyers</h4>
-              <div className="stack" style={{ gap: 'var(--space-2)' }}>
-                <a href="#" className="text-sm">Request Quotation</a>
-                <a href="#" className="text-sm">Product Search</a>
-                <a href="#" className="text-sm">Trade Assurance</a>
-                <a href="#" className="text-sm">Buyer Protection</a>
+            <div className="space-y-4">
+              <h4 className="text-lg font-semibold text-[#054a4e]">For Buyers</h4>
+              <div className="flex flex-col gap-2 text-sm text-slate-600">
+                <a href="#" className="transition hover:text-[#054a4e]">Request Quotation</a>
+                <a href="#" className="transition hover:text-[#054a4e]">Product Search</a>
+                <a href="#" className="transition hover:text-[#054a4e]">Trade Assurance</a>
+                <a href="#" className="transition hover:text-[#054a4e]">Buyer Protection</a>
               </div>
             </div>
-            <div>
-              <h4 className="h5 mb-4">For Suppliers</h4>
-              <div className="stack" style={{ gap: 'var(--space-2)' }}>
-                <a href="#" className="text-sm">List Products</a>
-                <a href="#" className="text-sm">Membership Plans</a>
-                <a href="#" className="text-sm">Supplier Resources</a>
-                <a href="#" className="text-sm">Success Stories</a>
+            <div className="space-y-4">
+              <h4 className="text-lg font-semibold text-[#054a4e]">For Suppliers</h4>
+              <div className="flex flex-col gap-2 text-sm text-slate-600">
+                <a href="#" className="transition hover:text-[#054a4e]">List Products</a>
+                <a href="#" className="transition hover:text-[#054a4e]">Membership Plans</a>
+                <a href="#" className="transition hover:text-[#054a4e]">Supplier Resources</a>
+                <a href="#" className="transition hover:text-[#054a4e]">Success Stories</a>
               </div>
             </div>
           </div>
-          <div className="divider"></div>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 'var(--space-4)', paddingTop: 'var(--space-4)' }}>
-            <p className="text-sm text-muted">© 2025 Airavat. All rights reserved.</p>
-            <div className="cluster">
-              <a href="#" className="text-sm">Privacy Policy</a>
-              <a href="#" className="text-sm">Terms of Service</a>
-              <a href="#" className="text-sm">Contact Us</a>
+          <div className="mt-10 flex flex-col gap-4 border-t border-slate-300 pt-6 text-sm text-slate-600 sm:flex-row sm:items-center sm:justify-between">
+            <p>© 2025 Airavat. All rights reserved.</p>
+            <div className="flex flex-wrap items-center gap-4">
+              <a href="#" className="transition hover:text-[#054a4e]">Privacy Policy</a>
+              <a href="#" className="transition hover:text-[#054a4e]">Terms of Service</a>
+              <a href="#" className="transition hover:text-[#054a4e]">Contact Us</a>
             </div>
           </div>
         </div>

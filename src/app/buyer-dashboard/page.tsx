@@ -3,11 +3,11 @@
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
-import { getUser, logout } from '@/lib/auth'
+import { getUser, logout, type User } from '@/lib/auth'
 
 export default function BuyerDashboardPage() {
   const router = useRouter()
-  const [user, setUser] = useState<any>(null)
+  const [user, setUser] = useState<User | null>(null)
 
   useEffect(() => {
     const currentUser = getUser()
@@ -20,127 +20,127 @@ export default function BuyerDashboardPage() {
 
   if (!user) {
     return (
-      <div className="center" style={{ minHeight: '100vh' }}>
-        <div className="spinner"></div>
+      <div className="flex min-h-screen items-center justify-center bg-[#f8f7f4]">
+        <div className="h-8 w-8 animate-spin rounded-full border-2 border-slate-300 border-t-[#02c4cb]" />
       </div>
     )
   }
 
   return (
-    <div style={{ minHeight: '100vh', background: 'var(--color-bg-alt)' }}>
+    <div className="min-h-screen bg-[#f8f7f4]">
       {/* Navigation */}
-      <nav className="navbar">
-        <div className="container cluster" style={{ justifyContent: 'space-between' }}>
-          <Link href="/" className="h5" style={{ color: 'white' }}>
+      <nav className="bg-[#054a4e] text-white">
+        <div className="mx-auto flex w-full max-w-5xl items-center justify-between px-4 py-4">
+          <Link href="/" className="text-lg font-semibold text-white">
             Airavat
           </Link>
-          <div className="cluster">
-            <span style={{ color: 'rgba(255,255,255,0.8)' }}>{user.email}</span>
-            <button onClick={logout} className="btn btn-ghost" style={{ color: 'white' }}>
+          <div className="flex items-center gap-4 text-sm">
+            <span className="text-white/80">{user.email}</span>
+            <button
+              onClick={logout}
+              className="rounded-lg border border-white/40 px-4 py-2 font-medium text-white transition hover:border-white hover:bg-white/10"
+            >
               Logout
             </button>
           </div>
         </div>
       </nav>
 
-      <div className="container" style={{ paddingTop: 'var(--space-8)', paddingBottom: 'var(--space-8)' }}>
-        <div className="stack">
-          <div>
-            <h1 className="h2">Buyer Dashboard</h1>
-            <p className="text-muted mt-2">Welcome back, {user.email}</p>
-          </div>
-
-          {/* Stats */}
-          <div className="grid grid-4 mt-6">
-            <div className="stat-card">
-              <div className="stat-value">12</div>
-              <div className="stat-label">Active Orders</div>
-              <div className="stat-trend up">+3 new</div>
-            </div>
-            <div className="stat-card">
-              <div className="stat-value">8</div>
-              <div className="stat-label">Pending Quotes</div>
-              <div className="stat-trend">2 responses</div>
-            </div>
-            <div className="stat-card">
-              <div className="stat-value">$18.2K</div>
-              <div className="stat-label">Total Spent</div>
-              <div className="stat-trend up">+15%</div>
-            </div>
-            <div className="stat-card">
-              <div className="stat-value">24</div>
-              <div className="stat-label">Saved Suppliers</div>
-              <div className="stat-trend">-</div>
-            </div>
-          </div>
-
-          {/* Quick Actions */}
-          <div className="card mt-6">
-            <div className="card-header">
-              <h3 className="h4">Quick Actions</h3>
-            </div>
-            <div className="card-body">
-              <div className="grid grid-4">
-                <Link href="/" className="btn btn-primary">Browse Products</Link>
-                <button className="btn btn-outline">Request Quote</button>
-                <button className="btn btn-outline">Track Orders</button>
-                <button className="btn btn-outline">Saved Items</button>
-              </div>
-            </div>
-          </div>
-
-          {/* Recent Orders */}
-          <div className="card mt-6">
-            <div className="card-header">
-              <h3 className="h4">Recent Orders</h3>
-            </div>
-            <div className="card-body">
-              <div className="empty-state">
-                <div className="empty-state-icon">🛒</div>
-                <h4 className="h5">No orders yet</h4>
-                <p className="text-muted">Start shopping to see your orders here</p>
-                <Link href="/" className="btn btn-primary mt-4">
-                  Browse Products
-                </Link>
-              </div>
-            </div>
-          </div>
-
-          {/* Recommended Suppliers */}
-          <div className="card mt-6">
-            <div className="card-header">
-              <h3 className="h4">Recommended Suppliers</h3>
-            </div>
-            <div className="card-body">
-              <div className="grid grid-3">
-                {[1, 2, 3].map((item) => (
-                  <div key={item} className="card" style={{ cursor: 'pointer' }}>
-                    <div style={{ 
-                      aspectRatio: '16/9', 
-                      background: 'var(--color-bg-alt)', 
-                      borderRadius: 'var(--radius-md) var(--radius-md) 0 0',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      fontSize: 'var(--text-4xl)',
-                    }}>
-                      🏭
-                    </div>
-                    <div className="card-body">
-                      <h4 className="h5">ABC Manufacturing Co.</h4>
-                      <p className="text-sm text-muted mt-2">Electronics & Components</p>
-                      <div className="cluster mt-3" style={{ justifyContent: 'space-between' }}>
-                        <div className="badge badge-success">Verified</div>
-                        <div className="text-sm">⭐ 4.8 (120 reviews)</div>
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
+      <main className="mx-auto w-full max-w-5xl space-y-8 px-4 py-12">
+        <div>
+          <h1 className="text-3xl font-bold text-[#054a4e]">Buyer Dashboard</h1>
+          <p className="mt-2 text-base text-slate-600">Welcome back, {user.email}</p>
         </div>
-      </div>
+
+        {/* Stats */}
+        <section className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+          {[
+            { value: '12', label: 'Active Orders', trend: '+3 new', trendColor: 'text-emerald-600' },
+            { value: '8', label: 'Pending Quotes', trend: '2 responses', trendColor: 'text-slate-500' },
+            { value: '$18.2K', label: 'Total Spent', trend: '+15%', trendColor: 'text-emerald-600' },
+            { value: '24', label: 'Saved Suppliers', trend: '-', trendColor: 'text-slate-500' },
+          ].map((stat) => (
+            <div key={stat.label} className="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
+              <div className="text-3xl font-bold text-[#054a4e]">{stat.value}</div>
+              <div className="mt-2 text-sm text-slate-500">{stat.label}</div>
+              <div className={`mt-4 text-sm font-medium ${stat.trendColor}`}>{stat.trend}</div>
+            </div>
+          ))}
+        </section>
+
+        {/* Quick Actions */}
+        <section className="rounded-2xl border border-slate-200 bg-white shadow-sm">
+          <div className="flex items-center justify-between border-b border-slate-100 px-6 py-4">
+            <h3 className="text-lg font-semibold text-[#1a1a1a]">Quick Actions</h3>
+          </div>
+          <div className="grid grid-cols-1 gap-4 px-6 py-6 sm:grid-cols-2 lg:grid-cols-4">
+            <Link
+              href="/"
+              className="inline-flex items-center justify-center rounded-lg bg-[#02c4cb] px-4 py-2 text-sm font-semibold text-white transition hover:bg-[#00aeb4]"
+            >
+              Browse Products
+            </Link>
+            <button className="rounded-lg border border-[#054a4e] px-4 py-2 text-sm font-semibold text-[#054a4e] transition hover:bg-[#054a4e] hover:text-white">
+              Request Quote
+            </button>
+            <button className="rounded-lg border border-[#054a4e] px-4 py-2 text-sm font-semibold text-[#054a4e] transition hover:bg-[#054a4e] hover:text-white">
+              Track Orders
+            </button>
+            <button className="rounded-lg border border-[#054a4e] px-4 py-2 text-sm font-semibold text-[#054a4e] transition hover:bg-[#054a4e] hover:text-white">
+              Saved Items
+            </button>
+          </div>
+        </section>
+
+        {/* Recent Orders */}
+        <section className="rounded-2xl border border-slate-200 bg-white shadow-sm">
+          <div className="flex items-center justify-between border-b border-slate-100 px-6 py-4">
+            <h3 className="text-lg font-semibold text-[#1a1a1a]">Recent Orders</h3>
+          </div>
+          <div className="px-6 py-10">
+            <div className="flex flex-col items-center justify-center gap-4 rounded-xl border border-dashed border-slate-200 bg-slate-50/60 p-12 text-center">
+              <div className="text-4xl">🛒</div>
+              <h4 className="text-xl font-semibold text-[#1a1a1a]">No orders yet</h4>
+              <p className="text-sm text-slate-500">Start shopping to see your orders here.</p>
+              <Link
+                href="/"
+                className="rounded-lg bg-[#02c4cb] px-5 py-2 text-sm font-semibold text-white transition hover:bg-[#00aeb4]"
+              >
+                Browse Products
+              </Link>
+            </div>
+          </div>
+        </section>
+
+        {/* Recommended Suppliers */}
+        <section className="rounded-2xl border border-slate-200 bg-white shadow-sm">
+          <div className="flex items-center justify-between border-b border-slate-100 px-6 py-4">
+            <h3 className="text-lg font-semibold text-[#1a1a1a]">Recommended Suppliers</h3>
+          </div>
+          <div className="grid grid-cols-1 gap-6 px-6 py-6 md:grid-cols-3">
+            {[1, 2, 3].map((item) => (
+              <div
+                key={item}
+                className="flex cursor-pointer flex-col overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm transition hover:-translate-y-1 hover:shadow-lg"
+              >
+                <div className="flex aspect-video w-full items-center justify-center bg-[#f8f7f4] text-4xl">
+                  🏭
+                </div>
+                <div className="flex flex-1 flex-col gap-3 px-5 py-6">
+                  <h4 className="text-lg font-semibold text-[#1a1a1a]">ABC Manufacturing Co.</h4>
+                  <p className="text-sm text-slate-500">Electronics &amp; Components</p>
+                  <div className="mt-auto flex items-center justify-between">
+                    <span className="inline-flex items-center rounded-full bg-emerald-100 px-3 py-1 text-xs font-semibold text-emerald-700">
+                      Verified
+                    </span>
+                    <span className="text-sm text-slate-600">⭐ 4.8 (120 reviews)</span>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+      </main>
     </div>
   )
 }

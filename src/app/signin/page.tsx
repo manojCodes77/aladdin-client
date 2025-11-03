@@ -4,6 +4,7 @@ import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import Image from 'next/image'
+import { Eye, EyeOff, User } from 'lucide-react'
 import { Button, Input, Checkbox, Alert } from '@/components/ui'
 
 export default function SigninPage() {
@@ -83,9 +84,17 @@ export default function SigninPage() {
 
   return (
     <div className="min-h-screen grid md:grid-cols-2">
+      {/* Skip to main content */}
+      <a
+        href="#signin-form"
+        className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-[#02c4cb] focus:text-white focus:rounded-lg"
+      >
+        Skip to sign in form
+      </a>
       {/* Left Side - Sign In Form */}
       <div className="flex items-center justify-center p-8 bg-white">
-        <div className="w-full max-w-md space-y-8">
+        <main className="w-full max-w-md" id="signin-form" role="main" aria-labelledby="signin-heading">
+        <div className="w-full space-y-8">
           {/* Logo */}
           <Link href="/">
             <Image 
@@ -99,7 +108,7 @@ export default function SigninPage() {
 
           {/* Header */}
           <div className="space-y-2">
-            <h1 className="text-3xl font-bold text-gray-900">Welcome Back</h1>
+            <h1 id="signin-heading" className="text-3xl font-bold text-gray-900">Welcome Back</h1>
             <p className="text-gray-600">
               Don&apos;t have an account?{' '}
               <Link href="/signup" className="text-[#054a4e] font-medium hover:underline">
@@ -109,12 +118,16 @@ export default function SigninPage() {
           </div>
 
           {/* Social Login Buttons */}
-          <div className="space-y-3">
+          <div className="space-y-3" role="group" aria-label="Social sign in options">
             <Button
               variant="outline"
               fullWidth
               type="button"
-              onClick={() => console.log('Google sign in')}
+              onClick={() => {
+                // TODO: Implement Google OAuth
+                console.log('Google sign in')
+              }}
+              aria-label="Sign in with Google"
             >
               <svg width="20" height="20" viewBox="0 0 20 20" fill="none" className="mr-2">
                 <path d="M19.8055 10.2292C19.8055 9.55056 19.7499 8.86722 19.6305 8.19861H10.2V12.0486H15.6014C15.3773 13.2917 14.6571 14.3889 13.6025 15.0875V17.5861H16.8251C18.7175 15.8431 19.8055 13.2722 19.8055 10.2292Z" fill="#4285F4"/>
@@ -129,7 +142,11 @@ export default function SigninPage() {
               variant="outline"
               fullWidth
               type="button"
-              onClick={() => console.log('LinkedIn sign in')}
+              onClick={() => {
+                // TODO: Implement LinkedIn OAuth
+                console.log('LinkedIn sign in')
+              }}
+              aria-label="Sign in with LinkedIn"
             >
               <svg width="20" height="20" viewBox="0 0 20 20" fill="#0077B5" className="mr-2">
                 <path d="M18.5195 0H1.47656C0.660156 0 0 0.644531 0 1.44141V18.5547C0 19.3516 0.660156 20 1.47656 20H18.5195C19.3359 20 20 19.3516 20 18.5586V1.44141C20 0.644531 19.3359 0 18.5195 0ZM5.93359 17.043H2.96484V7.49609H5.93359V17.043ZM4.44922 6.19531C3.49609 6.19531 2.72656 5.42578 2.72656 4.47656C2.72656 3.52734 3.49609 2.75781 4.44922 2.75781C5.39844 2.75781 6.16797 3.52734 6.16797 4.47656C6.16797 5.42188 5.39844 6.19531 4.44922 6.19531ZM17.043 17.043H14.0781V12.4023C14.0781 11.2969 14.0586 9.87109 12.5352 9.87109C10.9922 9.87109 10.7578 11.0781 10.7578 12.3242V17.043H7.79688V7.49609H10.6406V8.80078H10.6797C11.0742 8.05078 12.043 7.25781 13.4844 7.25781C16.4883 7.25781 17.043 9.23438 17.043 11.8047V17.043Z"/>
@@ -149,7 +166,7 @@ export default function SigninPage() {
           </div>
 
           {/* Sign In Form */}
-          <form onSubmit={handleSubmit} className="space-y-5">
+          <form onSubmit={handleSubmit} className="space-y-5" aria-label="Sign in form">
             {errors.submit && (
               <Alert variant="danger" dismissible onDismiss={() => setErrors({ ...errors, submit: '' })}>
                 {errors.submit}
@@ -183,9 +200,10 @@ export default function SigninPage() {
                   <button
                     type="button"
                     onClick={() => setShowPassword(!showPassword)}
-                    className="text-gray-400 hover:text-gray-600"
+                    className="text-gray-400 hover:text-gray-600 focus:outline-none focus:text-gray-900"
+                    aria-label={showPassword ? 'Hide password' : 'Show password'}
                   >
-                    {showPassword ? '👁️' : '👁️‍🗨️'}
+                    {showPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
                   </button>
                 }
               />
@@ -216,7 +234,7 @@ export default function SigninPage() {
           </form>
 
           {/* Footer */}
-          <p className="text-center text-sm text-gray-600">
+          <p className="text-center text-sm text-gray-600" role="contentinfo">
             By signing in, you agree to our{' '}
             <Link href="/terms" className="text-[#054a4e] hover:underline">
               Terms of Service
@@ -227,10 +245,11 @@ export default function SigninPage() {
             </Link>
           </p>
         </div>
+        </main>
       </div>
 
       {/* Right Side - Testimonial */}
-      <div className="hidden md:flex items-center justify-center p-12 bg-gradient-to-br from-[#054a4e] to-[#02c4cb] relative overflow-hidden">
+      <aside className="hidden md:flex items-center justify-center p-12 bg-gradient-to-br from-[#054a4e] to-[#02c4cb] relative overflow-hidden" aria-label="Testimonial">
         {/* Decorative circle */}
         <div className="absolute w-[500px] h-[500px] bg-white/10 rounded-full -top-48 -right-48"></div>
         
@@ -245,8 +264,8 @@ export default function SigninPage() {
           </blockquote>
           
           <div className="flex items-center gap-4">
-            <div className="w-12 h-12 rounded-full bg-white/20 flex items-center justify-center text-xl">
-              👤
+            <div className="w-12 h-12 rounded-full bg-white/20 flex items-center justify-center" aria-hidden="true">
+              <User className="h-6 w-6 text-white" />
             </div>
             <div>
               <div className="font-semibold">Sarah Johnson</div>
@@ -272,7 +291,7 @@ export default function SigninPage() {
             </div>
           </div>
         </div>
-      </div>
+      </aside>
     </div>
   )
 }
